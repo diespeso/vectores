@@ -4,11 +4,13 @@ import thorpy
 class MenuSeleccion:
 	#no usar sin inicializar pygame.init() primero
 
-	def __init__(self, opciones=[]):
+	def __init__(self, titulo= "Selecciona:", opciones=[]):
+		self.titulo = titulo
 		self.checkers = {}
 		for opcion in opciones:
 			self.add_checker(opcion)
 		self.last_checked = None
+		self.titulo_element = thorpy.make_text(self.titulo, 12, (0, 0, 0))
 
 	def add_checker(self, nombre):
 		self.checkers[nombre] = thorpy.Checker(nombre, value=False)
@@ -32,7 +34,7 @@ class MenuSeleccion:
 				return nombre
 
 	def get_caja(self):
-		elementos = []
+		elementos = [self.titulo_element]
 		for checker in self.checkers.values():
 			elementos.append(checker)
 

@@ -33,36 +33,11 @@ class ProjectionViewer:
 		}
 
 	def run(self, event):
-		"""
-		key_to_function = {
-		pygame.K_d: (lambda x: x.translateAll([-10, 0, 0])),
-		pygame.K_f: (lambda x: x.translateAll([0, 10, 0])),
-		pygame.K_g: (lambda x: x.translateAll([10, 0, 0])),
-		pygame.K_r: (lambda x: x.translateAll([0, -10, 0])),
-		pygame.K_q: (lambda x: x.rotateAll('X', 0.1)),
-		pygame.K_w: (lambda x: x.rotateAll('X', -0.1)),
-		pygame.K_a: (lambda x: x.rotateAll('Y', 0.1)),
-		pygame.K_s: (lambda x: x.rotateAll('Y', -0.1)),
-		pygame.K_z: (lambda x: x.rotateAll('Z', 0.1)),
-		pygame.K_x: (lambda x: x.rotateAll('Z', -0.1))}
-		"""
 		if event.type == pygame.KEYDOWN:
 			if event.key in self.key_to_function:
 				self.key_to_function[event.key](self)
 		self.display()
-		"""
-		running = True
-		while running:
-			for event in pygame.event.get():
-				if event.type == pygame.QUIT:
-					running = False
-				elif event.type == pygame.KEYDOWN:
-					if event.key in key_to_function:
-						key_to_function[event.key](self)
 
-			self.display()
-			pygame.display.flip()
-		"""
 
 	def addWireframe(self, name, wireframe, color=(255, 255, 255)):
 		self.wireframes[name] = wireframe

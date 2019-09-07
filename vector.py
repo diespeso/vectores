@@ -12,7 +12,7 @@ class Vector:
 		return (self.i, self.j, self.k)
 
 	def __str__(self):
-		return "{}i {}j {}k".format(self.i, self.j, self.k)
+		return "({}i, {}j, {}k)".format(self.i, self.j, self.k)
 
 	def to_wireframe(self):
 		wf = Wireframe()
@@ -41,9 +41,19 @@ class Vector:
 
 		return vectorResta
 
+	#no se grafica porque no produce vector
 	def producto_punto(self, vector):
-		return 0
+		sumatoria = 0
+		sumatoria += self.i * vector.i
+		sumatoria += self.j * vector.j
+		sumatoria += self.k * vector.k
+
+		return sumatoria
 
 	def producto_cruz(self, vector):
-		return Vector([0, 0, 0])
+		i = (self.j * vector.k) - (self.k * vector.j)
+		j = - ((self.i * vector.k) - (self.k * vector.i))
+		k = (self.i * vector.j) - (self.j * vector.i)
+
+		return Vector([i, j, k])
 

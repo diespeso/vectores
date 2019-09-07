@@ -12,11 +12,13 @@ import util
 import vector
 
 pygame.init()
+pygame.font.init()
 from gui.vector_gui import VectorGui
 from gui.menu_seleccion import MenuSeleccion
+from gui.caja_texto import CajaTexto
 
-tamano_ventana = (480, 360)
-ventana = pygame.display.set_mode((480, 360))
+tamano_ventana = (640, 420)
+ventana = pygame.display.set_mode(tamano_ventana)
 ventana.fill((255, 255, 255))
 
 canvas = Canvas(ventana, tamano_ventana, (0, 0))
@@ -24,36 +26,9 @@ canvas.ajustarPredefinido()
 
 gui_vector_a = VectorGui(tamano_ventana)
 gui_vector_b = VectorGui(tamano_ventana)
-gui_menu_s = MenuSeleccion(opciones=["suma", "resta",
+gui_menu_s = MenuSeleccion(titulo="Elige una operación",
+	opciones=["suma", "resta",
 	"producto punto", "producto cruz"])
-
-menu = thorpy.Menu()
-#hacer cajas de las instancias de la clase vector
-#posicionar la segunda
-caja_vector_a = gui_vector_a.get_caja()
-caja_vector_a.set_topleft((150, 0))
-caja_vector_b = gui_vector_b.get_caja()
-caja_vector_b.set_topleft((255, 0))
-
-vector_c = vector.Vector([0, 0, 0])
-
-#hacer una caja a partir de la clase y posicionarla
-caja_menu_s = gui_menu_s.get_caja()
-
-menu.add_to_population(caja_vector_a)
-menu.add_to_population(caja_vector_b)
-menu.add_to_population(caja_menu_s)
-
-for elemento in menu.get_population():
-	elemento.surface = ventana
-
-#para que todo salga bien, limpio
-caja_vector_a.blit()
-caja_vector_a.update()
-caja_vector_b.blit()
-caja_vector_b.update()
-caja_menu_s.blit()
-caja_menu_s.update()
 
 eje_i_positivo = Wireframe()
 eje_i_negativo = Wireframe()
@@ -86,9 +61,58 @@ pv.addWireframe("eje_k_negativo", eje_k_negativo, (0, 0, 100))
 
 gui_vector_a.set_projectionViewer(pv, "a", (255, 255, 0))
 gui_vector_b.set_projectionViewer(pv, "b")
+
+
+
+menu = thorpy.Menu()
+#hacer cajas de las instancias de la clase vector
+#posicionar la segunda
+caja_vector_a = gui_vector_a.get_caja()
+caja_vector_a.set_topleft((150, 0))
+caja_vector_b = gui_vector_b.get_caja()
+caja_vector_b.set_topleft((255, 0))
+
+
+vector_c = vector.Vector([0, 0, 0])
+
+#hacer una caja a partir de la clase y posicionarla
+caja_menu_s = gui_menu_s.get_caja()
+
+#texto para el vector c
+fuente = pygame.font.SysFont("arial", 14)
+posicion_fuente = (370, 10)
+mensaje_resultado = fuente.render("Resultado:", False, (0, 0, 0))
+gui_vector_c = fuente.render("", False, (0, 0, 0))
+
+caja_nota = CajaTexto(
+	"Nota: i: rojo,j: verde,\nk:azul.\n" +
+	"los ejes\n negativos son obscuros\n" +
+	"usa q,w,a,s,z,x para rotar\n" + 
+	"usa r,d,f,g para trasladar", position=(380, 40))
+
+caja_nota_real = caja_nota.get_caja()
+
+menu.add_to_population(caja_vector_a)
+menu.add_to_population(caja_vector_b)
+menu.add_to_population(caja_menu_s)
+menu.add_to_population(caja_nota_real)
+
+
+for elemento in menu.get_population():
+	elemento.surface = ventana
+
+#para que todo salga bien, limpio
+caja_vector_a.blit()
+caja_vector_a.update()
+caja_vector_b.blit()
+caja_vector_b.update()
+caja_menu_s.blit()
+caja_menu_s.update()
+caja_nota_real.blit()
+caja_nota_real.update()
+
+
 #pv.translateAll((canvas.tamano[0], canvas.tamano[1] * 0.5, 0))
-pv.rotateAll("X", 0.1)
-pv.rotateAll("Y", 0.3)
 
 corriendo = True
 flag_vector_c = False
@@ -103,13 +127,16 @@ while corriendo:
 			vector_c = gui_vector_a.get_vector()
 			if gui_menu_s.get_checked() == "suma":
 				vector_c = vector_c.sumar(gui_vector_b.get_vector())
+				gui_vector_c = fuente.render("c: {}".format(vector_c), False, (0, 0, 0))
 			elif gui_menu_s.get_checked() == "resta":
 				vector_c = vector_c.restar(gui_vector_b.get_vector())
+				gui_vector_c = fuente.render("c: {}".format(vector_c), False, (0, 0, 0))
 			elif gui_menu_s.get_checked() == "producto punto":
-				#todo: no se grafica, mostrarlo en texto
 				producto_punto = vector_c.producto_punto(gui_vector_b.get_vector())
+				gui_vector_c = fuente.render("Escalar: {}".format(producto_punto), False, (0, 0, 0))
 			elif gui_menu_s.get_checked() == "producto cruz":
 				vector_c = vector_c.producto_cruz(gui_vector_b.get_vector())
+				gui_vector_c = fuente.render("c: {}".format(vector_c), False, (0, 0, 0))
 			else:
 				print("!!!!!!!!!!!!!!!!!!!!!!!! Opcion no vaĺida, esto no debería pasar. Revisar el código")
 			print(gui_vector_a)
@@ -117,6 +144,10 @@ while corriendo:
 			print("{}: {}".format("c", vector_c))
 
 			pv.addWireframe("c", vector_c.to_wireframe(), (255, 100, 150))
+			pv.translateAll((canvas.get_tamano_lista()[0], canvas.get_tamano_lista()[1] * 0.5, 0))
 			flag_vector_c = True
+	ventana.blit(mensaje_resultado, (370, 0))
+	ventana.blit(gui_vector_c, (370, 15))
 	pygame.display.flip()
 	canvas.update()
+

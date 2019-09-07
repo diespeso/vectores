@@ -39,6 +39,7 @@ class VectorGui:
 
 		self.projectionViewer = None
 		self.vector = None
+		self.titulo = None
 
 	def __str__(self):
 		return "{}: ({}i, {}j, {}k)".format(self.name,
@@ -47,7 +48,7 @@ class VectorGui:
 			self.componentes[2])
 
 	def get_caja(self):
-		return thorpy.Box(elements=[self.insertion_i,
+		return thorpy.Box(elements=[self.titulo, self.insertion_i,
 			self.insertion_j, self.insertion_k,
 			self.boton])
 
@@ -61,3 +62,4 @@ class VectorGui:
 		self.projectionViewer = projectionViewer
 		self.color = color
 		self.name = name
+		self.titulo = thorpy.make_text(self.name, 12, (0, 0, 0))
