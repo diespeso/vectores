@@ -20,6 +20,11 @@ class Vector:
 		wf.addEdges([(0, 1)])
 		return wf
 
+	def from_componentes(self, componentes):
+		self.i = componentes[0]
+		self.j = componentes[1]
+		self.k = componentes[2]
+
 	def sumar(self, vector):
 		vectorSuma = Vector([0, 0, 0])
 		vectorSuma.i = self.i + vector.i
@@ -36,4 +41,3 @@ class Vector:
 
 		return vectorResta
 
-	

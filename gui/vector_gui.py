@@ -3,6 +3,8 @@ import thorpy
 
 import vector
 
+import util
+
 
 class VectorGui:
 	#debe de iniciarse pygame.init() antes de usarla
@@ -26,7 +28,7 @@ class VectorGui:
 
 		if self.projectionViewer != None:
 			self.projectionViewer.addWireframe(self.name, self.vector.to_wireframe(), self.color)
-
+		util.vector_flags[self.name] = self
 
 	def __init__(self, size):
 		self.componentes = [0, 0, 0]
@@ -45,6 +47,9 @@ class VectorGui:
 
 	def get_componentes(self):
 		return self.componentes
+
+	def get_vector(self):
+		return self.vector
 
 	def set_projectionViewer(self, projectionViewer, name, color=(255, 255, 255)):
 		self.projectionViewer = projectionViewer
