@@ -41,3 +41,9 @@ class Vector:
 
 		return vectorResta
 
+	def producto_punto(self, vector):
+		return 0
+
+	def producto_cruz(self, vector):
+		return Vector([0, 0, 0])
+

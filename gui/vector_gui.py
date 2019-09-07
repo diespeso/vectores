@@ -24,7 +24,7 @@ class VectorGui:
 		self.leer_k()
 
 		self.vector = vector.Vector(self.componentes)
-		print(self.vector)
+		#print(self.vector)
 
 		if self.projectionViewer != None:
 			self.projectionViewer.addWireframe(self.name, self.vector.to_wireframe(), self.color)
@@ -39,6 +39,12 @@ class VectorGui:
 
 		self.projectionViewer = None
 		self.vector = None
+
+	def __str__(self):
+		return "{}: ({}i, {}j, {}k)".format(self.name,
+			self.componentes[0],
+			self.componentes[1],
+			self.componentes[2])
 
 	def get_caja(self):
 		return thorpy.Box(elements=[self.insertion_i,
