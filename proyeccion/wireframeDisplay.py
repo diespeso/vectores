@@ -1,3 +1,5 @@
+#autor: Peter Colling Ridge (https://github.com/petercollingridge/Pygame3D)
+
 from proyeccion import wireframe
 from proyeccion.wireframe import *
 import pygame

@@ -24,7 +24,6 @@ class VectorGui:
 		self.leer_k()
 
 		self.vector = vector.Vector(self.componentes)
-		#print(self.vector)
 
 		if self.projectionViewer != None:
 			self.projectionViewer.addWireframe(self.name, self.vector.to_wireframe(), self.color)

@@ -3,6 +3,7 @@ from proyeccion.wireframe import Edge
 from proyeccion import wireframeDisplay
 
 class Vector:
+	#clase de manejo de operaciones entre vectores.
 	def __init__(self, componentes):
 		self.i = componentes[0]
 		self.j = componentes[1]

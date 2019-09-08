@@ -1,3 +1,5 @@
+#autor: Peter Colling Ridge (https://github.com/petercollingridge/Pygame3D)
+
 import numpy as np
 
 class Edge:

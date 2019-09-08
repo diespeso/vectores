@@ -16,11 +16,10 @@ class MenuSeleccion:
 		self.checkers[nombre] = thorpy.Checker(nombre, value=False)
 
 	def check(self, nombre):
+		#chequea una opcion y deschequea las demás
 		self.uncheck_all()
 		for _nombre, checker in self.checkers.items():
 			if _nombre == nombre:
-				#self.checkers[_nombre].value = True
-				#print(self.checkers[_nombre].value)
 				self.checkers[_nombre].check()
 				self.last_checked = _nombre
 
@@ -29,6 +28,7 @@ class MenuSeleccion:
 			checker.set_value(False)
 
 	def get_checked(self):
+		#mustra la opción elegida
 		for nombre, checker in self.checkers.items():
 			if checker.get_value() == True:
 				return nombre
@@ -41,10 +41,12 @@ class MenuSeleccion:
 		return thorpy.Box(elements=elementos)
 
 	def update(self):
+		#hace que solo se vea elegida, la que fue elegida
 		for _nombre, checker in self.checkers.items():
 			if _nombre == self.last_checked:
 				continue
 			elif checker.get_value():
 				self.check(_nombre)
 				break
+			#importante para que se muestre bien.
 			checker.total_unblit()
